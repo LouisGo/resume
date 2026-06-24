@@ -11,6 +11,7 @@ source_links:
   - "[[inbox/2026-06-24-role-shift-ai-typex-pc-interview-1]]"
   - "[[inbox/converted/2026-06-24-lou-early-regularization]]"
   - "[[work/2026-06-24-typex-pc-message-list-virtual-list]]"
+  - "[[work/2026-06-24-typex-pc-core-module-from-zero-map]]"
 claim_links:
   - "[[resume/claims/2026-06-24-role-shift-frontend-architect-ai-enabler]]"
   - "[[resume/claims/2026-06-24-typex-message-list-virtual-list-claim]]"
@@ -57,6 +58,7 @@ tags:
 - 多版本递进式消息列表、消息渲染、底层虚拟列表库重构和优化。
 - AI Agent 底座构建，包括 openclaw 接入、MCP 接入、ToolUse 设计和实现、AI Chat 模块。
 - 团队 AI 推广、多场分享，以及从 Cursor 到 Claude Code、opencode、Codex CLI、Codex App 的工具流演进。
+- `@message`、`@actions`、`@contextMenu`、`@ai` 等重点模块从零到一和体系化演进。详见 [[work/2026-06-24-typex-pc-core-module-from-zero-map]]。
 
 ## 结果
 
@@ -73,6 +75,7 @@ tags:
 - 消息列表性能提升的具体量化幅度。当前已确认性能对比材料缺失，不能编造指标。
 - AI 使用带来的产量和质量提升。
 - AI Agent 底座的实际落地程度、用户范围和业务影响。
+- `@actions` 与未来 `typex-cli` / AI ToolUse 的关系仍需补充设计文档或调用证据。
 
 ## 为什么重要
 

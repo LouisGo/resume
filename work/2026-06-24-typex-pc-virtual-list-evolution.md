@@ -127,11 +127,38 @@ tags:
 
 这一阶段体现的是工程成熟度：不仅解决“能滚动”，还处理后台/前台、快速切换、pending 冲刷、订阅泄漏、内存估算、debug 面板、事件风暴、重挂恢复等真实应用里的长期稳定性问题。
 
+### 阶段 5：XMessageList 锚点模型消息滚动容器
+
+2026-05 到 2026-06，演进进一步收敛为独立仓库 `/Users/lou/Work/XMessageList` 中的 `x-message-list`。
+
+这一阶段不再把问题定义为“通用虚拟列表”，而是明确做面向 TypeX 风格聊天界面的确定性 IM 消息列表：
+
+- 以 `messageId / position` 作为消息身份锚点；
+- 用 `before / after / around` 围绕锚点取上下文；
+- 只渲染当前 loaded segment，但让它处于正常文档流中；
+- 用 native scroll 表达真实已挂载 DOM 高度，不用 spacer 伪造未加载历史；
+- 通过 visual anchor DOM rect delta 做滚动补偿；
+- 用 transaction 串起 anchor capture、React commit ack、DOM measurement 和 scrollTop correction；
+- 用 session registry、loaded segment store、viewport runtime、React adapter 切分所有权。
+
+这次仍然是“逻辑和视图分离”，但不是早期组件内部的 `DataStore / Dispatcher / View` 分离，而是升维为：
+
+- Host Message Event Store 负责 canonical message cache 和 SDK/main callbacks；
+- MessageList Session Registry 负责 session 生命周期、request bridge、anchorMemory、readReceipts；
+- Loaded Segment Store 负责当前窗口 merge/dedupe/identity remap/trim/request token；
+- Viewport Runtime 负责 DOM refs、measurement、anchor correction、edge need、diagnostics 和 scroll writing；
+- React Adapter 只做 projection render、row ref 和 commit ack。
+
+当前保守状态：
+
+- XMessageList 容器实现已有当前 docs/source 和 git 历史支撑；
+- typex-pc 中还需要对接 SDK 接口，重写 Host Message Event Store / 数据管理，以及围绕锚点心智模型的配套逻辑。
+
 ## 面试叙事口径
 
 可以这样讲：
 
-> 早期我做的不是一次到位的完美虚拟列表，而是一个逐步演进的 IM 列表基础设施。第一阶段先把耦合在消息列表里的数据、滚动、渲染逻辑拆开，解决卡顿、跳变和重渲染失控问题，支撑了当时的交付和提前转正。后续随着场景复杂度上升，我逐步意识到组件级 store 不够，于是演进到应用级 `@virtualList`：用 DataManager/Registry/EventCoordinator 管理稀疏数据、视口驱动、事件合并、LRU、预取、focus/background 和 debug metrics。最终还移除了早期 `VirtualListBetter` 过渡层，说明这套东西不是停留在 demo，而是在真实业务反馈里持续收敛。
+> 早期我做的不是一次到位的完美虚拟列表，而是一个逐步演进的 IM 列表基础设施。第一阶段先把耦合在消息列表里的数据、滚动、渲染逻辑拆开，解决卡顿、跳变和重渲染失控问题，支撑了当时的交付和提前转正。后续随着场景复杂度上升，我逐步意识到组件级 store 不够，于是演进到应用级 `@virtualList`。再往后我把问题重新定义为 IM 消息锚点模型，而不是通用虚拟列表：消息身份由 `messageId / position` 表达，窗口围绕 before / after / around 锚点加载，前端只负责 loaded segment 的正常文档流渲染、视觉锚点补偿和交互体验。这就是现在的 `x-message-list`，后续 typex-pc 接入重点变成 SDK anchor API 和 Host Message Event Store 的对接。
 
 ## 攻防重点
 
@@ -142,6 +169,8 @@ tags:
 - 为什么后续要从组件级转向应用级；
 - 如何处理 IM 场景里的动态高度、滚动恢复、数据一致性、事件合并、缓存回收；
 - 为什么删除 `VirtualListBetter` 是架构成熟，而不是失败；
+- 为什么 XMessageList 不做通用虚拟列表，而做消息锚点滚动容器；
+- 为什么 `count/index` 只能作为 hint，不能作为消息身份；
 - AI 在其中是加速实现和 review，不替代问题建模和演进判断。
 
 ## 证据
@@ -150,6 +179,9 @@ tags:
 
 - `/Users/lou/Work/typex-pc` 当前分支：`release/1.7.0`
 - 当前代码：`packages/typex-pc-render/src/@virtualList/**`
+- 当前 XMessageList 代码：`/Users/lou/Work/XMessageList/src/x-message-list/**`
+- 当前 XMessageList 文档：`/Users/lou/Work/XMessageList/README.md`、`/Users/lou/Work/XMessageList/docs/**`
+- PDF：[[inbox/converted/2026-06-24-im-message-anchor-research]]
 - 当前文档：`.doc/list-manager-architecture.md`、`.doc/listmanager-core-architecture.md`、`.doc/virtualList-pending冲刷兜底修复.md`、`.doc/virtualList-订阅器泄漏修复.md`
 - 历史提交：`e88308ef9`、`df1505866`、`d25718cf2`、`f556c6346`、`fc30d4759`、`82af37ec3`、`c57565e60`、`7189eb017`、`0739486a8`、`0a60fa888`、`7686865f4`
 
@@ -158,4 +190,4 @@ tags:
 - 哪些阶段真正上线，分别覆盖哪些用户或版本；
 - 是否有 PR/评审链接；
 - 是否有故障复盘、用户反馈或团队评价；
-- 当前 `@virtualList` 与后续 `@messageList` / v2 runtime 的边界，需要下一轮单独梳理。
+- 当前 `@virtualList` 与 XMessageList / typex-pc Host Message Event Store 的迁移边界，需要下一轮单独梳理。

@@ -5,6 +5,7 @@ target_resume: chinese-master
 strength: high
 proof_links:
   - "[[work/ai-practice/2026-06-24-ai-assisted-frontend-workflow-evolution]]"
+  - "[[work/2026-06-24-typex-pc-core-module-from-zero-map]]"
 risk_level: high
 status: needs-proof
 drill_links:
@@ -30,7 +31,8 @@ tags:
 ## 支撑材料
 
 - 当前主要来自用户口述。
-- 需后续用 `~/Work/typex-pc` 代码路径、提交、PR、文档、demo 或上线记录验证。
+- 本轮已补充 `~/Work/typex-pc` 中 `@ai` 相关代码路径和文档证据：renderer AI Chat、main runtime、provider registry、request runner、tool registry、stream event、写操作确认等。
+- openclaw、MCP 仍需后续用代码路径、提交、PR、文档、demo 或上线记录验证。
 
 ## 风险检查
 
@@ -39,6 +41,7 @@ tags:
 - 业务价值：需要说明 AI Agent 底座解决了什么用户或团队问题。
 - 个人贡献：需要拆出用户 owner 的部分。
 - 指标：需要补充接入范围、可用能力、用户反馈或工程结果。
+- 表达边界：当前可更稳地写 AI Chat / ToolUse runtime；openclaw / MCP 暂不应写成已核验证据。
 
 ## 决策
 
