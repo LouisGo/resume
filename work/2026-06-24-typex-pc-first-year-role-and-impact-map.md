@@ -10,6 +10,7 @@ evidence_status: mixed
 source_links:
   - "[[inbox/2026-06-24-role-shift-ai-typex-pc-interview-1]]"
   - "[[inbox/converted/2026-06-24-lou-early-regularization]]"
+  - "[[work/2026-06-24-typex-pc-message-list-virtual-list]]"
 claim_links:
   - "[[resume/claims/2026-06-24-role-shift-frontend-architect-ai-enabler]]"
   - "[[resume/claims/2026-06-24-typex-message-list-virtual-list-claim]]"
@@ -63,12 +64,13 @@ tags:
 
 - 早期工作支撑了提前转正述职材料。
 - 消息列表专项具备明确问题、方案、核心库、迁移策略、基准测试和自测闭环。
+- 2025-04-23 到 2025-05-21 的 typex-pc git 历史能看到 Lou 围绕 `MessageContentNext`、`MessageContentContainer`、`VirtualListBetter`、`VirtualListCore` 的连续提交。
 - i18n、Iconfont、React DevTools 等工作能体现团队效率体系建设。
 
 待补证据的结果：
 
 - “入职不到 2 个月提前转正，且为公司内部第一次”。
-- 消息列表性能提升的具体量化幅度。
+- 消息列表性能提升的具体量化幅度。当前已确认性能对比材料缺失，不能编造指标。
 - AI 使用带来的产量和质量提升。
 - AI Agent 底座的实际落地程度、用户范围和业务影响。
 
