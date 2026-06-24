@@ -29,3 +29,19 @@ Capture -> Extract -> Select -> Write -> Drill -> Review
 ## 当前版本策略
 
 v1 只服务一份中文主简历。多岗位、公司定制、英文版都等核心闭环稳定后再派生。
+
+## 文件导入
+
+需要导入 PDF、Word、PPT、Excel、网页导出等文件时，先按需安装 MarkItDown：
+
+```bash
+uv tool install "markitdown[all]"
+```
+
+然后运行：
+
+```bash
+scripts/import-file path/to/source.pdf optional-topic-slug
+```
+
+脚本只负责把文件转换成 Markdown 并创建 inbox note。是否进入简历、如何攻防，仍由后续 AI 提炼流程决定。

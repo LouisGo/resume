@@ -38,6 +38,8 @@
 4. 对高价值、高风险、记忆薄弱的主题创建 `drill_item`。
 5. 保持 input、work、claim、drill 之间的链接。
 
+如果输入来自截图、PDF、Office 文件、网页、其他 AI 导出包，先遵循 [[meta/workflows/intake-protocol|随机输入摄取协议]]，不要直接把转换结果当事实。
+
 ## Obsidian Usage
 
 - 事实内容使用 Markdown。

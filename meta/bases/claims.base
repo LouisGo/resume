@@ -1,6 +1,6 @@
 filters:
   and:
-    - 'type == "resume_claim"'
+    - type == "resume_claim"
 properties:
   file.name:
     displayName: Claim
@@ -18,7 +18,7 @@ properties:
     displayName: Drill
 views:
   - type: table
-    name: "All Claims"
+    name: All Claims
     order:
       - file.name
       - target_resume
@@ -28,13 +28,12 @@ views:
       - proof_links
       - drill_links
   - type: table
-    name: "Needs Proof"
+    name: Needs Proof
     filters:
       and:
-        - 'status == "needs-proof"'
+        - status == "needs-proof"
     order:
       - file.name
       - strength
       - risk_level
       - proof_links
-

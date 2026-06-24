@@ -1,6 +1,6 @@
 filters:
   and:
-    - 'type == "input_note"'
+    - type == "input_note"
 properties:
   file.name:
     displayName: Note
@@ -14,10 +14,10 @@ properties:
     displayName: Topic
 views:
   - type: table
-    name: "Unprocessed Inbox"
+    name: Unprocessed Inbox
     filters:
       and:
-        - 'processed_status != "done"'
+        - processed_status != "done"
     order:
       - file.name
       - source_type
@@ -25,11 +25,10 @@ views:
       - processed_status
       - topic_hint
   - type: table
-    name: "All Inbox"
+    name: All Inbox
     order:
       - file.name
       - source_type
       - created_at
       - processed_status
       - topic_hint
-

@@ -23,6 +23,7 @@ created_at: 2026-06-24
 - [[meta/bases/ai-work.base|AI Work]]
 - [[meta/bases/drill.base|Drill Queue]]
 - [[meta/canvas/career-map.canvas|Career Map]]
+- [[meta/workflows/intake-protocol|随机输入摄取协议]]
 
 ## 第一条真实输入
 

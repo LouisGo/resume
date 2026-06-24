@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage:
+  scripts/import-file <path-to-source-file> [topic-slug]
+
+Converts a source file to Markdown with MarkItDown and creates a linked inbox note.
+
+MarkItDown is intentionally optional. Install one of:
+  uv tool install "markitdown[all]"
+  pipx install "markitdown[all]"
+
+Output:
+  inbox/converted/YYYY-MM-DD-topic.md
+  inbox/YYYY-MM-DD-topic-import.md
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+  usage >&2
+  exit 2
+fi
+
+source_file="$1"
+if [[ ! -f "$source_file" ]]; then
+  echo "Source file not found: $source_file" >&2
+  exit 1
+fi
+
+if ! command -v markitdown >/dev/null 2>&1; then
+  cat >&2 <<'EOF'
+markitdown command not found.
+
+Install it with one of:
+  uv tool install "markitdown[all]"
+  pipx install "markitdown[all]"
+EOF
+  exit 127
+fi
+
+date_stamp="$(date +%F)"
+base_name="$(basename "$source_file")"
+name_without_ext="${base_name%.*}"
+topic="${2:-$name_without_ext}"
+
+slug="$(
+  printf '%s' "$topic" |
+    tr '[:upper:]' '[:lower:]' |
+    sed -E 's/[^a-z0-9._-]+/-/g; s/^-+//; s/-+$//' |
+    cut -c 1-80
+)"
+
+if [[ -z "$slug" ]]; then
+  slug="imported-source"
+fi
+
+mkdir -p inbox/converted
+
+converted_path="inbox/converted/${date_stamp}-${slug}.md"
+note_path="inbox/${date_stamp}-${slug}-import.md"
+
+if [[ -e "$converted_path" || -e "$note_path" ]]; then
+  suffix="$(date +%H%M%S)"
+  converted_path="inbox/converted/${date_stamp}-${slug}-${suffix}.md"
+  note_path="inbox/${date_stamp}-${slug}-${suffix}-import.md"
+fi
+
+markitdown "$source_file" > "$converted_path"
+
+cat > "$note_path" <<EOF
+---
+type: input_note
+source_type: imported_file
+created_at: ${date_stamp}
+processed_status: pending
+topic_hint: ${slug}
+original_file: "${source_file}"
+converted_file: "${converted_path}"
+conversion_tool: markitdown
+extraction_confidence: medium
+tags:
+  - inbox
+  - imported-source
+---
+
+# ${topic} import
+
+## 来源
+
+- 原始文件：${source_file}
+- 转换文件：[[${converted_path}]]
+- 转换工具：MarkItDown
+- 可信度：medium
+
+## 转换文本或摘要
+
+见 [[${converted_path}]]。
+
+## 可提炼事实
+
+
+## 可能简历价值
+
+
+## 风险与待确认
+
+
+## 处理结果
+
+- 输入类型：
+- 流向：
+- 生成文件：
+EOF
+
+printf 'Converted: %s\nInbox note: %s\n' "$converted_path" "$note_path"
+

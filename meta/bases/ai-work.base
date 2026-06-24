@@ -1,6 +1,6 @@
 filters:
   and:
-    - 'type == "ai_practice"'
+    - type == "ai_practice"
 properties:
   file.name:
     displayName: AI Work
@@ -18,7 +18,7 @@ properties:
     displayName: Claims
 views:
   - type: table
-    name: "AI Work"
+    name: AI Work
     order:
       - file.name
       - ai_type
@@ -28,14 +28,13 @@ views:
       - evidence_status
       - claim_links
   - type: table
-    name: "Needs Evidence"
+    name: Needs Evidence
     filters:
       or:
-        - 'evidence_status == "needs-proof"'
-        - 'evidence_status == "unverified"'
+        - evidence_status == "needs-proof"
+        - evidence_status == "unverified"
     order:
       - file.name
       - ai_type
       - evidence_status
       - scenario
-
