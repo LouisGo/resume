@@ -1,0 +1,41 @@
+filters:
+  and:
+    - 'type == "ai_practice"'
+properties:
+  file.name:
+    displayName: AI Work
+  ai_type:
+    displayName: Type
+  scenario:
+    displayName: Scenario
+  benefit:
+    displayName: Benefit
+  verifiable_result:
+    displayName: Result
+  evidence_status:
+    displayName: Evidence
+  claim_links:
+    displayName: Claims
+views:
+  - type: table
+    name: "AI Work"
+    order:
+      - file.name
+      - ai_type
+      - scenario
+      - benefit
+      - verifiable_result
+      - evidence_status
+      - claim_links
+  - type: table
+    name: "Needs Evidence"
+    filters:
+      or:
+        - 'evidence_status == "needs-proof"'
+        - 'evidence_status == "unverified"'
+    order:
+      - file.name
+      - ai_type
+      - evidence_status
+      - scenario
+

@@ -1,0 +1,39 @@
+filters:
+  and:
+    - 'type == "drill_item"'
+properties:
+  file.name:
+    displayName: Drill
+  claim_link:
+    displayName: Claim
+  question_type:
+    displayName: Type
+  difficulty:
+    displayName: Difficulty
+  next_review:
+    displayName: Next Review
+  memory_status:
+    displayName: Memory
+views:
+  - type: table
+    name: "Review Queue"
+    order:
+      - file.name
+      - next_review
+      - memory_status
+      - difficulty
+      - question_type
+      - claim_link
+  - type: table
+    name: "Weak Memory"
+    filters:
+      or:
+        - 'memory_status == "new"'
+        - 'memory_status == "shaky"'
+        - 'memory_status == "stale"'
+    order:
+      - file.name
+      - next_review
+      - memory_status
+      - difficulty
+

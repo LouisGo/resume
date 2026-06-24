@@ -1,0 +1,135 @@
+{
+  "nodes": [
+    {
+      "id": "flow",
+      "type": "group",
+      "x": -60,
+      "y": -80,
+      "width": 1320,
+      "height": 420,
+      "label": "Resume AI Workbench: Capture -> Extract -> Select -> Write -> Drill -> Review",
+      "color": "4"
+    },
+    {
+      "id": "inbox",
+      "type": "file",
+      "file": "inbox/README.md",
+      "x": 0,
+      "y": 0,
+      "width": 220,
+      "height": 180,
+      "color": "5"
+    },
+    {
+      "id": "work",
+      "type": "file",
+      "file": "work/README.md",
+      "x": 280,
+      "y": 0,
+      "width": 220,
+      "height": 180,
+      "color": "4"
+    },
+    {
+      "id": "claims",
+      "type": "file",
+      "file": "resume/claims/README.md",
+      "x": 560,
+      "y": 0,
+      "width": 220,
+      "height": 180,
+      "color": "3"
+    },
+    {
+      "id": "resume",
+      "type": "file",
+      "file": "resume/中文主简历.md",
+      "x": 840,
+      "y": 0,
+      "width": 220,
+      "height": 180,
+      "color": "2"
+    },
+    {
+      "id": "drill",
+      "type": "file",
+      "file": "drill/README.md",
+      "x": 1120,
+      "y": 0,
+      "width": 220,
+      "height": 180,
+      "color": "1"
+    },
+    {
+      "id": "workflow",
+      "type": "file",
+      "file": "meta/workflows/resume-ai-workbench.md",
+      "x": 280,
+      "y": 240,
+      "width": 500,
+      "height": 140,
+      "color": "6"
+    },
+    {
+      "id": "review",
+      "type": "file",
+      "file": "drill/review-system.md",
+      "x": 840,
+      "y": 240,
+      "width": 500,
+      "height": 140,
+      "color": "6"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-inbox-work",
+      "fromNode": "inbox",
+      "fromSide": "right",
+      "toNode": "work",
+      "toSide": "left",
+      "label": "Extract"
+    },
+    {
+      "id": "e-work-claims",
+      "fromNode": "work",
+      "fromSide": "right",
+      "toNode": "claims",
+      "toSide": "left",
+      "label": "Select"
+    },
+    {
+      "id": "e-claims-resume",
+      "fromNode": "claims",
+      "fromSide": "right",
+      "toNode": "resume",
+      "toSide": "left",
+      "label": "Write"
+    },
+    {
+      "id": "e-resume-drill",
+      "fromNode": "resume",
+      "fromSide": "right",
+      "toNode": "drill",
+      "toSide": "left",
+      "label": "Drill"
+    },
+    {
+      "id": "e-drill-review",
+      "fromNode": "drill",
+      "fromSide": "bottom",
+      "toNode": "review",
+      "toSide": "right",
+      "label": "Review"
+    },
+    {
+      "id": "e-workflow-flow",
+      "fromNode": "workflow",
+      "fromSide": "top",
+      "toNode": "work",
+      "toSide": "bottom",
+      "label": "Rules"
+    }
+  ]
+}
+

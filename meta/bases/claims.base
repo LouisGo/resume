@@ -1,0 +1,40 @@
+filters:
+  and:
+    - 'type == "resume_claim"'
+properties:
+  file.name:
+    displayName: Claim
+  target_resume:
+    displayName: Resume
+  strength:
+    displayName: Strength
+  risk_level:
+    displayName: Risk
+  status:
+    displayName: Status
+  proof_links:
+    displayName: Proof
+  drill_links:
+    displayName: Drill
+views:
+  - type: table
+    name: "All Claims"
+    order:
+      - file.name
+      - target_resume
+      - strength
+      - risk_level
+      - status
+      - proof_links
+      - drill_links
+  - type: table
+    name: "Needs Proof"
+    filters:
+      and:
+        - 'status == "needs-proof"'
+    order:
+      - file.name
+      - strength
+      - risk_level
+      - proof_links
+
